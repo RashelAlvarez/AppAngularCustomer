@@ -2,6 +2,11 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.1.
 
+This project contains a CRUD of Clients. Angular Material was used to improve the appearance of the 
+components, and Sweet Alert library was used for alert messages.
+
+This App connects to an API made in Spring Boot. https://github.com/RashelAlvarez/api-backend
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

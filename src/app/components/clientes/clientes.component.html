@@ -1,0 +1,69 @@
+<div class="container">
+<div class="mt-5"><h2>Listado de Clientes</h2></div>
+<div class="form-group mt-2 mb-2 text-left">
+  <button mat-raised-button color="primary"  [routerLink]="['/clientes/form']"  >Crear cliente</button>
+</div>
+
+<ng-template #sinRegistros>
+  <div  class="alert alert-info">
+    <p>No hay registros en la base de datos</p>
+  </div>
+</ng-template>
+
+<div class="example-container mat-elevation-z8 mt-2 mb-5" >
+    <mat-table #table [dataSource]="dataSource" *ngIf="hayRegistros(); else sinRegistros" >
+  
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+  
+      <!-- Position Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+       <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+      </ng-container>
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef> nombre </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+      </ng-container>
+  
+      <!-- Weight Column -->
+      <ng-container matColumnDef="apellido">
+        <mat-header-cell *matHeaderCellDef> apellido </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.apellido}} </mat-cell>
+      </ng-container>
+  
+      <!-- Symbol Column -->
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef> email </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="createAt">
+        <mat-header-cell *matHeaderCellDef> Fecha de creacion </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.createAt}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef> acciones </mat-header-cell>
+        <mat-cell *matCellDef="let element"> <button mat-raised-button  color="accent"  [routerLink]="['/clientes/form', element.id]"  >editar</button>
+          <button class="m-2" mat-raised-button color="warn"   (click)="delete(element)"  >eliminar</button> </mat-cell>
+        
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+   
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[4, 8]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+  </div>
+
+
+  
+  <br>
+  <br>
+</div>

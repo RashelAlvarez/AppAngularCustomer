@@ -1,0 +1,64 @@
+<div class="container ">
+    <div [formGroup]="form">
+        <div class="form-group row mt-5">
+            <mat-form-field appearance="fill">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="nombre" name="nombre">
+
+            </mat-form-field>
+            <div *ngIf="form.get('nombre').invalid && (form.get('nombre').touched || form.get('nombre').dirty)">
+                <mat-error *ngIf="form.get('nombre').errors['required']">El nombre es requerido</mat-error>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <mat-form-field appearance="fill">
+                <mat-label>Apellido</mat-label>
+                <input matInput formControlName="apellido" name="apellido">
+            </mat-form-field>
+            <div *ngIf="form.get('apellido').invalid && (form.get('apellido').touched || form.get('apellido').dirty)">
+                <mat-error *ngIf="form.get('apellido').errors['required']">El apellido es requerido</mat-error>
+            </div>
+
+        </div>
+        <div class="form-group row">
+            <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" name="email">
+            </mat-form-field>
+            <div *ngIf="form.get('email').invalid && (form.get('email').touched || form.get('email').dirty)">
+                <mat-error *ngIf="form.get('email').errors['required']">El email es requerido</mat-error>
+                <mat-error *ngIf="form.get('email').errors['email']">El email no es valido</mat-error>
+
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <mat-form-field>
+                <mat-label>Elige la fecha</mat-label>
+                <input matInput [matDatepicker]="picker" name="createAt" formControlName="createAt">
+                <mat-hint>DD/MM/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+
+        </div>
+
+
+        <div class="form-group mt-5">
+            <button mat-raised-button color="primary" [disabled]="form.invalid" *ngIf="!ids else elseBlock"
+                (click)="onSubmit()">Crear</button>
+
+
+
+        </div>
+
+        <ng-template #elseBlock>
+            <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="update()">Editar</button>
+
+        </ng-template>
+
+        {{ids}}
+
+    </div>
+</div>
