@@ -18,10 +18,12 @@ import { CommonModule } from '@angular/common';
 import {  MatPaginatorModule } from '@angular/material/paginator';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
-import { registerLocaleData } from '@angular/common';
+import { registerLocaleData } from '@angular/common'; //esto es para registrar el formato de fecha local
 import localesES from '@angular/common/locales/es';
-
-registerLocaleData(localesES, 'es');
+import { DetalleComponent } from './components/clientes/detalle/detalle.component';//esto es para registrar el formato de fecha local
+import {MatCardModule} from '@angular/material/card';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+registerLocaleData(localesES, 'es'); //esto es para registrar el formato de fecha local
 
 const routes: Routes=[
   {path: '', redirectTo: '/clientes', pathMatch: 'full'},
@@ -29,6 +31,7 @@ const routes: Routes=[
   {path: 'clientes/form', component:FormComponent},
   {path: 'clientes/form/:id', component:FormComponent},
   {path: 'clientes/page/:page', component: ClientesComponent},
+  {path: 'clientes/detalle/:id', component:DetalleComponent},
 
 ];
 
@@ -39,6 +42,8 @@ const routes: Routes=[
     FooterComponent,
     FormComponent,
     ClientesComponent,
+    DetalleComponent,
+
     
   ],
   imports: [
@@ -56,6 +61,8 @@ const routes: Routes=[
     MatPaginatorModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatCardModule,
+    MatProgressBarModule,
     RouterModule.forRoot(routes),
     
   ],

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import {Cliente } from './cliente';
 import { of, Observable , throwError} from 'rxjs';
-import { HttpClient , HttpHeaders} from '@angular/common/http';
+import { HttpClient , HttpHeaders, HttpRequest, HttpEvent} from '@angular/common/http';
 import { map, catchError } from 'rxjs';
 import Swal from 'sweetalert2';
 import {Router} from '@angular/router';
+import { formatDate } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,14 @@ export class ClienteService {
   getClientes(page:number): Observable<any> {
     //return of(CLIENTES); //se convierte el listado de clientes en un observable
     return this.http.get(this.urlEndPoint ).pipe(
-      map((response:any)=> response as Cliente[])
+      map((response:any)=>{
+        let clientes =response as Cliente[];
+      return clientes.map(cliente => {
+        //cliente.createAt = formatDate(cliente.createAt, 'dd-MM-yyyy', 'es');
+        return cliente;
+      }) } 
+      
+      )
       );
   }
 
@@ -78,5 +86,20 @@ export class ClienteService {
         return throwError(e);
       })
     )
+  }
+
+  subirFoto(archivo:File , id):Observable<HttpEvent<{}>>{
+    let formData = new FormData();
+    formData.append("archivo", archivo);
+    formData.append("id", id);
+
+    const req=new HttpRequest('POST',`${this.urlEndPoint}/upload`, formData, {
+      reportProgress:true
+    });
+
+    return this.http.request(req);
+
+
+
   }
 }

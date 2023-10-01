@@ -19,34 +19,47 @@
       <!-- Position Column -->
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-       <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+       <mat-cell *matCellDef="let element">     
+      
+        <button mat-raised-button  color="primary"  [routerLink]="['/clientes/detalle', element.id]"  >   {{element.id}} </button>  
+      </mat-cell>
       </ng-container>
-  
+            <!-- Name Column -->
+        
       <!-- Name Column -->
       <ng-container matColumnDef="nombre">
-        <mat-header-cell *matHeaderCellDef> nombre </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
       </ng-container>
   
       <!-- Weight Column -->
       <ng-container matColumnDef="apellido">
-        <mat-header-cell *matHeaderCellDef> apellido </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.apellido}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef> Apellido </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.apellido | uppercase}} </mat-cell>
       </ng-container>
   
       <!-- Symbol Column -->
       <ng-container matColumnDef="email">
-        <mat-header-cell *matHeaderCellDef> email </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.email}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="createAt">
-        <mat-header-cell *matHeaderCellDef> Fecha de creacion </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.createAt}} </mat-cell>
+        <mat-header-cell *matHeaderCellDef> Fecha de creación </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.createAt | date:"dd-MM-yyyy"}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="foto">
+        <mat-header-cell *matHeaderCellDef> Foto </mat-header-cell>
+        <mat-cell *matCellDef="let element"> 
+          <img *ngIf="element?.foto" src="http://localhost:8009/uploads/img/{{element.foto}}" width="64px" alt="" class="img-thumbnail rounded">
+          <img *ngIf="!element?.foto" src="../../../assets/images/user.png" width="64px" alt="" class="img-thumbnail rounded">
+       
+        </mat-cell>
       </ng-container>
   
       <ng-container matColumnDef="acciones">
-        <mat-header-cell *matHeaderCellDef> acciones </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
         <mat-cell *matCellDef="let element"> <button mat-raised-button  color="accent"  [routerLink]="['/clientes/form', element.id]"  >editar</button>
           <button class="m-2" mat-raised-button color="warn"   (click)="delete(element)"  >eliminar</button> </mat-cell>
         

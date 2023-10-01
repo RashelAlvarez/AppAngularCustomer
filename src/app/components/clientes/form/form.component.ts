@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { ClienteService } from '../cliente.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { formatDate } from '@angular/common';
 
 
 @Component({
