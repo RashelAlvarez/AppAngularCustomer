@@ -5,6 +5,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 This project contains a CRUD of Clients. Angular Material was used to improve the appearance of the 
 components, and Sweet Alert library was used for alert messages.
 
+Screenshots:
+
+<img src="src/assets/images/DetalleCliente.png">
+
+<img src="src/assets/images/listadoClientes.png">
+
+<img src="src/assets/images/swingalert.png">
 This App connects to an API made in Spring Boot. https://github.com/RashelAlvarez/api-backend
 
 ## Development server
