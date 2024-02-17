@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import {Cliente } from './cliente';
-import { of, Observable , throwError} from 'rxjs';
-import { HttpClient , HttpHeaders, HttpRequest, HttpEvent} from '@angular/common/http';
+import { Cliente } from './cliente';
+import { of, Observable, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpRequest, HttpEvent } from '@angular/common/http';
 import { map, catchError } from 'rxjs';
 import Swal from 'sweetalert2';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
 
 @Injectable({
@@ -15,24 +15,39 @@ export class ClienteService {
   private HttpHeaders=new HttpHeaders({'Content-Type': 'application/json'})
   constructor(private http:HttpClient, private router:Router) { }
 
+  //metodo para redirigir al login si el usuario no esta autorizado
+  private isNoAutorizado(e): boolean {
+    if (e.status == 401 || e.status == 403) {
+      this.router.navigate(['/login'])
+      return true;
+    }
+    return false;
+  }
+
   getClientes(page:number): Observable<any> {
     //return of(CLIENTES); //se convierte el listado de clientes en un observable
     return this.http.get(this.urlEndPoint ).pipe(
       map((response:any)=>{
         let clientes =response as Cliente[];
-      return clientes.map(cliente => {
-        //cliente.createAt = formatDate(cliente.createAt, 'dd-MM-yyyy', 'es');
-        return cliente;
-      }) } 
-      
+        return clientes.map(cliente => {
+          //cliente.createAt = formatDate(cliente.createAt, 'dd-MM-yyyy', 'es');
+          return cliente;
+        }) }
+
       )
-      );
+    );
   }
 
   createCliente(cliente: Cliente):Observable<any>{
     return this.http.post<any>(this.urlEndPoint, cliente, {headers:this.HttpHeaders}).pipe(
       catchError(e=>{
-      
+        if (this.isNoAutorizado(e)) {
+          Swal.fire(
+            'No autorizado', e.error.error, 'error'
+
+          );
+          return throwError(e);
+        }
         console.error(e.error.mensaje);
         Swal.fire(
           e.error.mensaje, e.error.error, 'error'
@@ -47,6 +62,13 @@ export class ClienteService {
     return this.http.get<Cliente>(`${this.urlEndPoint}/${id}`).pipe(
       catchError(e=>{ //el catchError para capturar el error desde el banckend
         this.router.navigate(['/clientes']);
+        if (this.isNoAutorizado(e)) {
+          Swal.fire(
+            'No autorizado', e.error.error, 'error'
+
+          );
+          return throwError(e);
+        }
         console.error(e.error.mensaje);
         Swal.fire(
           'Error al editar', e.error.mensaje, 'error'
@@ -57,14 +79,16 @@ export class ClienteService {
   }
 
   update(id:number,cliente: Cliente): Observable<any>{
-  //  console.log("updateservice" + id);
-    return this.http.put<any>(`${this.urlEndPoint}/${id}`, cliente, {headers: this.HttpHeaders}).pipe(
-      catchError(e=>{
-      /*  if (e.status=400){
-          //console.log("error desde el service " + e.error.errors);
-       
+    //  console.log("updateservice" + id);
+    return this.http.put<any>(`${this.urlEndPoint}/${id}`, cliente, { headers: this.HttpHeaders }).pipe(
+      catchError(e => {
+        if (this.isNoAutorizado(e)) {
+          Swal.fire(
+            'No autorizado', e.error.error, 'error'
+
+          );
           return throwError(e);
-        }*/
+        }
         console.error(e.error.mensaje);
         Swal.fire(
           e.error.mensaje, e.error.error, 'error'
@@ -76,9 +100,15 @@ export class ClienteService {
   }
 
   delete(id:number):Observable<Cliente>{
-    return this.http.delete<Cliente>(`${this.urlEndPoint}/${id}`, {headers: this.HttpHeaders}).pipe(
-      catchError(e=>{
-        console.error(e.error.mensaje);
+    return this.http.delete<Cliente>(`${this.urlEndPoint}/${id}`, { headers: this.HttpHeaders }).pipe(
+      catchError(e => {
+        if (this.isNoAutorizado(e)) {
+          Swal.fire(
+            'No autorizado', e.error.error, 'error'
+
+          );
+          return throwError(e);
+        }
         Swal.fire(
           e.error.mensaje, e.error.error, 'error'
 
@@ -97,7 +127,16 @@ export class ClienteService {
       reportProgress:true
     });
 
-    return this.http.request(req);
+    return this.http.request(req).pipe(
+      catchError(e=> {
+        this.isNoAutorizado(e);
+        Swal.fire(
+          'No autorizado', e.error.error, 'error'
+
+        );
+        return throwError(e);
+      })
+    );
 
 
 
