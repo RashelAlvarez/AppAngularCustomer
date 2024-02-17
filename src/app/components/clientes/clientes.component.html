@@ -1,43 +1,46 @@
 <div class="container">
-<div class="mt-5"><h2>Listado de Clientes</h2></div>
-<div class="form-group mt-2 mb-2 text-left">
-  <button mat-raised-button color="primary"  [routerLink]="['/clientes/form']"  >Crear cliente</button>
-</div>
-
-<ng-template #sinRegistros>
-  <div  class="alert alert-info">
-    <p>No hay registros en la base de datos</p>
+  <div class="mt-5">
+    <h2>Listado de Clientes</h2>
   </div>
-</ng-template>
+  <div class="form-group mt-2 mb-2 text-left">
+    <button mat-raised-button color="primary" [routerLink]="['/clientes/form']">Crear cliente</button>
+  </div>
 
-<div class="example-container mat-elevation-z8 mt-2 mb-5" >
-    <mat-table #table [dataSource]="dataSource" *ngIf="hayRegistros(); else sinRegistros" >
-  
+  <ng-template #sinRegistros>
+    <div class="alert alert-info">
+      <p>No hay registros en la base de datos</p>
+    </div>
+  </ng-template>
+
+  <div class="example-container mat-elevation-z8 mt-2 mb-5">
+    <mat-table #table [dataSource]="dataSource" *ngIf="hayRegistros(); else sinRegistros">
+
       <!--- Note that these columns can be defined in any order.
             The actual rendered columns are set as a property on the row definition" -->
-  
+
       <!-- Position Column -->
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-       <mat-cell *matCellDef="let element">     
-      
-        <button mat-raised-button  color="primary"  [routerLink]="['/clientes/detalle', element.id]"  >   {{element.id}} </button>  
-      </mat-cell>
+        <mat-cell *matCellDef="let element">
+
+          <button mat-raised-button color="primary" [routerLink]="['/clientes/detalle', element.id]"> {{element.id}}
+          </button>
+        </mat-cell>
       </ng-container>
-            <!-- Name Column -->
-        
+      <!-- Name Column -->
+
       <!-- Name Column -->
       <ng-container matColumnDef="nombre">
         <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
       </ng-container>
-  
+
       <!-- Weight Column -->
       <ng-container matColumnDef="apellido">
         <mat-header-cell *matHeaderCellDef> Apellido </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.apellido | uppercase}} </mat-cell>
       </ng-container>
-  
+
       <!-- Symbol Column -->
       <ng-container matColumnDef="email">
         <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
@@ -51,32 +54,33 @@
 
       <ng-container matColumnDef="foto">
         <mat-header-cell *matHeaderCellDef> Foto </mat-header-cell>
-        <mat-cell *matCellDef="let element"> 
-          <img *ngIf="element?.foto" src="http://localhost:8009/uploads/img/{{element.foto}}" width="64px" alt="" class="img-thumbnail rounded">
-          <img *ngIf="!element?.foto" src="../../../assets/images/user.png" width="64px" alt="" class="img-thumbnail rounded">
-       
+        <mat-cell *matCellDef="let element">
+          <img *ngIf="element?.foto" src="http://localhost:8009/uploads/img/{{element.foto}}" width="64px" alt=""
+            class="img-thumbnail rounded">
+          <img *ngIf="!element?.foto" src="../../../assets/images/user.png" width="64px" alt=""
+            class="img-thumbnail rounded">
+
         </mat-cell>
       </ng-container>
-  
+
       <ng-container matColumnDef="acciones">
         <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
-        <mat-cell *matCellDef="let element"> <button mat-raised-button  color="accent"  [routerLink]="['/clientes/form', element.id]"  >editar</button>
-          <button class="m-2" mat-raised-button color="warn"   (click)="delete(element)"  >eliminar</button> </mat-cell>
-        
+        <mat-cell *matCellDef="let element"> <button mat-raised-button color="accent"
+            [routerLink]="['/clientes/form', element.id]">editar</button>
+          <button class="m-2" mat-raised-button color="warn" (click)="delete(element)">eliminar</button> </mat-cell>
+
       </ng-container>
-  
+
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-   
+
     </mat-table>
-    <mat-paginator [pageSizeOptions]="[4, 8]"
-                 showFirstLastButtons
-                 aria-label="Select page of periodic elements">
-  </mat-paginator>
+    <mat-paginator [pageSizeOptions]="[4, 8]" showFirstLastButtons aria-label="Select page of periodic elements">
+    </mat-paginator>
   </div>
 
 
-  
+
   <br>
   <br>
 </div>
