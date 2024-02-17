@@ -23,6 +23,8 @@ import localesES from '@angular/common/locales/es';
 import { DetalleComponent } from './components/clientes/detalle/detalle.component';//esto es para registrar el formato de fecha local
 import {MatCardModule} from '@angular/material/card';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatIconModule} from '@angular/material/icon';
+import { LoginComponent } from './components/users/login/login.component';
 registerLocaleData(localesES, 'es'); //esto es para registrar el formato de fecha local
 
 const routes: Routes=[
@@ -32,6 +34,7 @@ const routes: Routes=[
   {path: 'clientes/form/:id', component:FormComponent},
   {path: 'clientes/page/:page', component: ClientesComponent},
   {path: 'clientes/detalle/:id', component:DetalleComponent},
+  {path: 'login', component:LoginComponent}
 
 ];
 
@@ -43,6 +46,7 @@ const routes: Routes=[
     FormComponent,
     ClientesComponent,
     DetalleComponent,
+    LoginComponent,
 
     
   ],
@@ -63,6 +67,7 @@ const routes: Routes=[
     MatNativeDateModule,
     MatCardModule,
     MatProgressBarModule,
+    MatIconModule,
     RouterModule.forRoot(routes),
     
   ],

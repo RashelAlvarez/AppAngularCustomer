@@ -1,0 +1,19 @@
+.card {
+    width: auto;
+  }
+
+.card-title{
+    justify-content: center;
+}
+
+.card-title mat-card-title {
+    font-size: xx-large;
+}
+
+#boton{
+    justify-content: center;
+}
+
+#boton button{
+    width: 100%;
+}
