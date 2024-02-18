@@ -68,4 +68,13 @@ export class AuthService {
     }
     return null;
   }
+
+  isAuthenticated():boolean{
+    let objeto=this.obtenerDatosToken(this.token); //obtener token desde el metodo getter 
+    if(objeto !=null && objeto.user_name && objeto.user_name.length>0){
+      return true;
+      
+    }
+    return false;
+  }
 }
