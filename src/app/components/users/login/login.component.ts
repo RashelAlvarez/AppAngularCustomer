@@ -40,8 +40,8 @@ export class LoginComponent  implements OnInit {
   login():void{
     console.log(this.user = this.form.value);
     this.authService.login(this.user).subscribe(response =>{
-      let objeto=JSON.parse(atob(response.access_token.split(".")[1]));
-      console.log(objeto);
+      this.authService.guardarUsuario(response.access_token);
+      this.authService.guardarToken(response.access_token);
       this.router.navigate(['/clientes']);
     })
   }

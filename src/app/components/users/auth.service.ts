@@ -9,7 +9,30 @@ import { User } from './user';
 })
 export class AuthService {
 
+  private _user:User;
+  private _token:string;
+
   constructor( private http: HttpClient) {}
+
+  public get user():User{
+    if (this._user!=null) {
+      return this._user;
+    }else if (this._user==null && sessionStorage.getItem('user')!=null) {
+     this._user= JSON.parse(sessionStorage.getItem('user')) as User;
+    return this._user;
+    }
+    return new User();
+  }
+
+  public get token():string{
+    if (this._token!=null) {
+    return this._token;
+    }else if (this._token==null && sessionStorage.getItem('token')!=null) {
+     this._token= JSON.parse(sessionStorage.getItem('token')) ;
+     return this._token;
+    }
+    return null;
+  }
 
   login(user:User):Observable<any>{
 
@@ -25,5 +48,24 @@ export class AuthService {
     console.log(params.toString());
     return this.http.post<any>(urlEndpoint ,params.toString(), {headers:httpHeaders});
   }
+
+  guardarUsuario(accessToken:string):void{
+    let objeto=this.obtenerDatosToken(accessToken);
+    this._user=new User();
+    this._user.username=objeto.user_name;
+    this._user.roles=objeto.authorities;
+    sessionStorage.setItem('user', JSON.stringify(this._user)); //stringify convierte un objeto en string
+  }
   
+  guardarToken(accessToken:string):void{
+    this._token=accessToken;
+    sessionStorage.setItem('token', accessToken);
+  }
+
+  obtenerDatosToken(accessToken:string):any{
+    if(accessToken!=null){
+      return JSON.parse(atob(accessToken.split(".")[1])); //parse convierte un string en objeto
+    }
+    return null;
+  }
 }
