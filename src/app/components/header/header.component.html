@@ -11,10 +11,20 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link " routerLink="/clientes" aria-current="page" href="#">Clientes</a>
         </li>
-
       </ul>
+
       <ul class="navbar-nav navbar-right">
-        <li><a routerLink="/login" class="btn btn-outline-primary" href="">Login</a></li>
+        <li *ngIf="!authService.isAuthenticated()"><a routerLink="/login" class="btn btn-outline-primary"
+            href="">Login</a></li>
+        <div class="btn-group" *ngIf="authService.isAuthenticated()">
+          <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static"
+            aria-expanded="false">
+            {{authService.user.username}}
+          </button>
+          <ul class="dropdown-menu dropdown-menu-lg-end">
+            <button (click)="logout()" type="submit" class="dropdown-item" href="#"> Sign Out</button>
+          </ul>
+        </div>
       </ul>
 
     </div>

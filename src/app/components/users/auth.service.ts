@@ -28,7 +28,7 @@ export class AuthService {
     if (this._token!=null) {
     return this._token;
     }else if (this._token==null && sessionStorage.getItem('token')!=null) {
-     this._token= JSON.parse(sessionStorage.getItem('token')) ;
+     this._token= sessionStorage.getItem('token') ;
      return this._token;
     }
     return null;
@@ -71,10 +71,18 @@ export class AuthService {
 
   isAuthenticated():boolean{
     let objeto=this.obtenerDatosToken(this.token); //obtener token desde el metodo getter 
+    //console.log('autenticado', objeto);
     if(objeto !=null && objeto.user_name && objeto.user_name.length>0){
       return true;
       
     }
     return false;
   }
+
+  logout():void{
+    this._token=null;
+    this._user=null;
+    sessionStorage.clear();
+  }
+
 }
