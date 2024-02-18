@@ -43,6 +43,13 @@ export class LoginComponent  implements OnInit {
       this.authService.guardarUsuario(response.access_token);
       this.authService.guardarToken(response.access_token);
       this.router.navigate(['/clientes']);
+    }, err =>{
+      if (err.status==400) {
+        Swal.fire(
+          'Error Login', 'Usuario o Contraseña incorrecta', 'error'
+
+        );
+      }
     })
   }
 }
