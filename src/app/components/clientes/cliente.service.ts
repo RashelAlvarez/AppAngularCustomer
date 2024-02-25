@@ -27,8 +27,13 @@ export class ClienteService {
 
   //metodo para redirigir al login si el usuario no esta autorizado
   private isNoAutorizado(e): boolean {
-    if (e.status == 401 || e.status == 403) {
+    if (e.status == 401 ) {
       this.router.navigate(['/login'])
+      return true;
+    }
+    if ( e.status == 403) {
+      Swal.fire('Acceso denegado', 'No tienes acceso a este recurso', 'warning' );
+      this.router.navigate(['/clientes'])
       return true;
     }
     return false;
@@ -52,10 +57,6 @@ export class ClienteService {
     return this.http.post<any>(this.urlEndPoint, cliente, {headers:this.agregarAuthorizationHeader()}).pipe(
       catchError(e=>{
         if (this.isNoAutorizado(e)) {
-          Swal.fire(
-            'No autorizado', e.error.error, 'error'
-
-          );
           return throwError(e);
         }
         console.error(e.error.mensaje);
@@ -73,10 +74,6 @@ export class ClienteService {
       catchError(e=>{ //el catchError para capturar el error desde el banckend
         this.router.navigate(['/clientes']);
         if (this.isNoAutorizado(e)) {
-          Swal.fire(
-            'No autorizado', e.error.error, 'error'
-
-          );
           return throwError(e);
         }
         console.error(e.error.mensaje);
@@ -93,10 +90,6 @@ export class ClienteService {
     return this.http.put<any>(`${this.urlEndPoint}/${id}`, cliente, { headers: this.agregarAuthorizationHeader() }).pipe(
       catchError(e => {
         if (this.isNoAutorizado(e)) {
-          Swal.fire(
-            'No autorizado', e.error.error, 'error'
-
-          );
           return throwError(e);
         }
         console.error(e.error.mensaje);
@@ -113,10 +106,6 @@ export class ClienteService {
     return this.http.delete<Cliente>(`${this.urlEndPoint}/${id}`, { headers: this.agregarAuthorizationHeader() }).pipe(
       catchError(e => {
         if (this.isNoAutorizado(e)) {
-          Swal.fire(
-            'No autorizado', e.error.error, 'error'
-
-          );
           return throwError(e);
         }
         Swal.fire(
@@ -147,10 +136,6 @@ export class ClienteService {
     return this.http.request(req).pipe(
       catchError(e=> {
         this.isNoAutorizado(e);
-        Swal.fire(
-          'No autorizado', e.error.error, 'error'
-
-        );
         return throwError(e);
       })
     );
