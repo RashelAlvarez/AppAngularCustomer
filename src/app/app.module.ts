@@ -25,13 +25,14 @@ import {MatCardModule} from '@angular/material/card';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatIconModule} from '@angular/material/icon';
 import { LoginComponent } from './components/users/login/login.component';
+import { authGuard } from './components/users/guards/auth.guard';
 registerLocaleData(localesES, 'es'); //esto es para registrar el formato de fecha local
 
 const routes: Routes=[
   {path: '', redirectTo: '/clientes', pathMatch: 'full'},
   {path: 'clientes', component: ClientesComponent},
-  {path: 'clientes/form', component:FormComponent},
-  {path: 'clientes/form/:id', component:FormComponent},
+  {path: 'clientes/form', component:FormComponent, canActivate:[authGuard]},
+  {path: 'clientes/form/:id', component:FormComponent, canActivate:[authGuard]},
   {path: 'clientes/page/:page', component: ClientesComponent},
   {path: 'clientes/detalle/:id', component:DetalleComponent},
   {path: 'login', component:LoginComponent}

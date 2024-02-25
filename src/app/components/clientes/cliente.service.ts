@@ -28,9 +28,16 @@ export class ClienteService {
   //metodo para redirigir al login si el usuario no esta autorizado
   private isNoAutorizado(e): boolean {
     if (e.status == 401 ) {
+
+      if(this.authService.isAuthenticated()){
+        this.authService.logout();
+      }
       this.router.navigate(['/login'])
       return true;
     }
+
+   
+
     if ( e.status == 403) {
       Swal.fire('Acceso denegado', 'No tienes acceso a este recurso', 'warning' );
       this.router.navigate(['/clientes'])
