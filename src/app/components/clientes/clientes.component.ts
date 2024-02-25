@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import Swal from 'sweetalert2';
+import { AuthService } from '../users/auth.service';
 
 
 @Component({
@@ -23,14 +24,25 @@ export class ClientesComponent implements OnInit {
   dataSource=new MatTableDataSource<any>;
   
   constructor(private clienteService: ClienteService,
-    private activatedRoute :ActivatedRoute) { }
+    private activatedRoute :ActivatedRoute,
+    public authService: AuthService) { }
 
   clientes: Cliente[];
    paginador:any;
 
   ngOnInit(): void {
     this.getAll();
+
+    if (!this.authService.hasRole("ROLE_ADMIN")) {
+      this.displayedColumns.splice(6,1);
+      this.displayedColumns.splice(5,1);
+      this.displayedColumns.splice(0,1);
+    }
   }
+
+  
+   
+  
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;

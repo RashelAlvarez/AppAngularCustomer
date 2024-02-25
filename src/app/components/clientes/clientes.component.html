@@ -3,7 +3,7 @@
     <h2>Listado de Clientes</h2>
   </div>
   <div class="form-group mt-2 mb-2 text-left">
-    <button mat-raised-button color="primary" [routerLink]="['/clientes/form']">Crear cliente</button>
+    <button  *ngIf="authService.hasRole('ROLE_ADMIN')" mat-raised-button color="primary" [routerLink]="['/clientes/form']">Crear cliente</button>
   </div>
 
   <ng-template #sinRegistros>
@@ -19,9 +19,9 @@
             The actual rendered columns are set as a property on the row definition" -->
 
       <!-- Position Column -->
-      <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-        <mat-cell *matCellDef="let element">
+      <ng-container matColumnDef="id" >
+        <mat-header-cell *matHeaderCellDef > No. </mat-header-cell>
+        <mat-cell *matCellDef="let element" >
 
           <button mat-raised-button color="primary" [routerLink]="['/clientes/detalle', element.id]"> {{element.id}}
           </button>
@@ -30,8 +30,8 @@
       <!-- Name Column -->
 
       <!-- Name Column -->
-      <ng-container matColumnDef="nombre">
-        <mat-header-cell *matHeaderCellDef> Nombre </mat-header-cell>
+      <ng-container matColumnDef="nombre" >
+        <mat-header-cell *matHeaderCellDef  > Nombre </mat-header-cell>
         <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
       </ng-container>
 
@@ -63,11 +63,12 @@
         </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="acciones">
-        <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
-        <mat-cell *matCellDef="let element"> <button mat-raised-button color="accent"
-            [routerLink]="['/clientes/form', element.id]">editar</button>
-          <button class="m-2" mat-raised-button color="warn" (click)="delete(element)">eliminar</button> </mat-cell>
+      <ng-container matColumnDef="acciones"  >
+        <mat-header-cell *matHeaderCellDef > Acciones </mat-header-cell>
+        <mat-cell *matCellDef="let element"  > 
+          <button mat-raised-button color="accent" [routerLink]="['/clientes/form', element.id]">editar</button>
+          <button class="m-2" mat-raised-button color="warn"   (click)="delete(element)">eliminar</button> 
+        </mat-cell>
 
       </ng-container>
 
@@ -78,7 +79,7 @@
     <mat-paginator [pageSizeOptions]="[4, 8]" showFirstLastButtons aria-label="Select page of periodic elements">
     </mat-paginator>
   </div>
-
+ 
 
 
   <br>
