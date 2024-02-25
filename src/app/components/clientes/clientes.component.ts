@@ -35,8 +35,8 @@ export class ClientesComponent implements OnInit {
 
     if (!this.authService.hasRole("ROLE_ADMIN")) {
       this.displayedColumns.splice(6,1);
-      this.displayedColumns.splice(5,1);
-      this.displayedColumns.splice(0,1);
+     // this.displayedColumns.splice(5,1);
+      //this.displayedColumns.splice(0,1);
     }
   }
 
