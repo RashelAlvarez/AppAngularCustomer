@@ -12,10 +12,10 @@ export const authGuard: CanActivateFn = (route:ActivatedRouteSnapshot, state:Rou
     let token = authService.token;
     let payload= authService.obtenerDatosToken(token);
     let now = new Date().getTime()/1000;
-    if (payload.exp < now) {
+    if (payload.exp < now) {    
       return true;
     }
-    Swal.fire('Sesión expirada', 'Por favor ingresar nuevamente', 'warning' );
+   // Swal.fire('Sesión expirada', 'Por favor ingresar nuevamente', 'warning' );
     return false;
   }
 

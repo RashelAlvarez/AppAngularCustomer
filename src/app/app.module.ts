@@ -27,6 +27,8 @@ import {MatIconModule} from '@angular/material/icon';
 import { LoginComponent } from './components/users/login/login.component';
 import { authGuard } from './components/users/guards/auth.guard';
 import { roleGuard } from './components/users/guards/role.guard';
+import { TokenInterceptor } from './components/users/interceptors/token.interceptor';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 registerLocaleData(localesES, 'es'); //esto es para registrar el formato de fecha local
 
 const routes: Routes=[
@@ -73,7 +75,7 @@ const routes: Routes=[
     RouterModule.forRoot(routes),
     
   ],
-  providers: [ClienteService],
+  providers: [ClienteService, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
