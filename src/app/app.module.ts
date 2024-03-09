@@ -29,6 +29,7 @@ import { authGuard } from './components/users/guards/auth.guard';
 import { roleGuard } from './components/users/guards/role.guard';
 import { TokenInterceptor } from './components/users/interceptors/token.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './components/users/interceptors/token.auth';
 registerLocaleData(localesES, 'es'); //esto es para registrar el formato de fecha local
 
 const routes: Routes=[
@@ -75,7 +76,8 @@ const routes: Routes=[
     RouterModule.forRoot(routes),
     
   ],
-  providers: [ClienteService, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }],
+  providers: [ClienteService, { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

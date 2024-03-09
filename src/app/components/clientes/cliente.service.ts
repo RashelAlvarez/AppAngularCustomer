@@ -26,7 +26,7 @@ export class ClienteService {
   }*/
 
   //metodo para redirigir al login si el usuario no esta autorizado
-  private isNoAutorizado(e): boolean {
+  /*private isNoAutorizado(e): boolean {
     if (e.status == 401 ) {
 
       if(this.authService.isAuthenticated()){
@@ -44,7 +44,7 @@ export class ClienteService {
       return true;
     }
     return false;
-  }
+  }*/
 
   getClientes(page:number): Observable<any> {
     //return of(CLIENTES); //se convierte el listado de clientes en un observable
@@ -63,14 +63,14 @@ export class ClienteService {
   createCliente(cliente: Cliente):Observable<any>{
     return this.http.post<any>(this.urlEndPoint, cliente /*, {headers:this.agregarAuthorizationHeader()}*/).pipe(
       catchError(e=>{
-        if (this.isNoAutorizado(e)) {
+        /*if (this.isNoAutorizado(e)) {
           return throwError(e);
         }
         console.error(e.error.mensaje);
         Swal.fire(
           e.error.mensaje, e.error.error, 'error'
 
-        );
+        );*/
         return throwError(e);
       })
     )
@@ -80,13 +80,13 @@ export class ClienteService {
     return this.http.get<Cliente>(`${this.urlEndPoint}/${id}` /*, {headers:this.agregarAuthorizationHeader()}*/).pipe(
       catchError(e=>{ //el catchError para capturar el error desde el banckend
         this.router.navigate(['/clientes']);
-        if (this.isNoAutorizado(e)) {
+       /* if (this.isNoAutorizado(e)) {
           return throwError(e);
         }
         console.error(e.error.mensaje);
         Swal.fire(
           'Error al editar', e.error.mensaje, 'error'
-        );
+        );*/
         return throwError(e);
       })
     )
@@ -96,14 +96,14 @@ export class ClienteService {
     //  console.log("updateservice" + id);
     return this.http.put<any>(`${this.urlEndPoint}/${id}`, cliente,/* { headers: this.agregarAuthorizationHeader() }*/).pipe(
       catchError(e => {
-        if (this.isNoAutorizado(e)) {
+       /* if (this.isNoAutorizado(e)) {
           return throwError(e);
         }
         console.error(e.error.mensaje);
         Swal.fire(
           e.error.mensaje, e.error.error, 'error'
 
-        );
+        );*/
         return throwError(e);
       })
     )
@@ -112,13 +112,13 @@ export class ClienteService {
   delete(id:number):Observable<Cliente>{
     return this.http.delete<Cliente>(`${this.urlEndPoint}/${id}`/*, { headers: this.agregarAuthorizationHeader() }*/).pipe(
       catchError(e => {
-        if (this.isNoAutorizado(e)) {
+       /* if (this.isNoAutorizado(e)) {
           return throwError(e);
         }
         Swal.fire(
           e.error.mensaje, e.error.error, 'error'
 
-        );
+        );*/
         return throwError(e);
       })
     )
@@ -142,7 +142,7 @@ export class ClienteService {
 
     return this.http.request(req).pipe(
       catchError(e=> {
-        this.isNoAutorizado(e);
+      //  this.isNoAutorizado(e);
         return throwError(e);
       })
     );
